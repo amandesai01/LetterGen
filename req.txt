@@ -1,0 +1,16 @@
+to : Incometax Officer,  OPTION (Assitant Commisoner of Incometax)
+Ward 1, 2, 3..., Akola Circle, Akola
+
+Assess : <DROPDOWN>
+
+Address : <AUTO FROM DROPDOWN>
+PAN : <"">
+Mob NO: <"">
+
+Subject : <TYPE>
+
+Ref no: <TYPE>
+
+<SELF BODY>
+
+ --> docx file output.
