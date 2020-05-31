@@ -1,5 +1,5 @@
 from docx import Document
-
+import json
 class Letter:
     def __init__(self, TO=None, isAssistantComm=None, WardNo=None, Assessee=None, SUBJECT=None, RefNo=None, BODY=None):
         self.properties = {
@@ -94,7 +94,15 @@ class Letter:
         document.save(path)
     
 def get_choices_kvp():
-    return [("demo1", "This is Demo"), ("demo2", "This is Demo 2")]
+    fp = open("C:\\Users\\kismatit\\OneDrive\\Desktop\\LetterGen\\data.json", "r")
+    raw_data = fp.read()
+    data = json.loads(raw_data)
+    kvps = []
+    for d in data:
+        k = d['id']
+        v = d['name']
+        kvps.append((k, v))
+    return kvps
 
 # letter = Letter("The Income Tax Officer", False, 6, "SOME ASSESSEE", "This letter is regarding Demo", "909", "This is a demo test letter.\nSome XYZ, Testing Currently")
 # letter.save_to_docs('demo.docx')
