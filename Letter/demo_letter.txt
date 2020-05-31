@@ -1,0 +1,22 @@
+To,
+{TO},
+{WardNo}
+{AssistantComm}
+{CityCondition}
+
+Assessee    :   {assessee}
+                {address}
+                Cell No. : {MobNo}
+
+PAN		:	{PAN}
+
+Subject 		:	{SUBJECT}
+
+
+Reference	:	{RefNo}
+
+{BODY}
+
+Yours Faithfully,
+
+-----------------
