@@ -1,12 +1,18 @@
 from docx import Document
 import json
+
+fp = open("C:\\Users\\kismatit\\OneDrive\\Desktop\\LetterGen\\data.json", "r")
+raw_data = fp.read()
+data = json.loads(raw_data)
+
 class Letter:
     def __init__(self, TO=None, isAssistantComm=None, WardNo=None, Assessee=None, SUBJECT=None, RefNo=None, BODY=None):
         self.properties = {
             "TO" : "",
             "isAssistantComm" : False,
             "WardNo" : "",
-            "Assessee" : "",
+            "AssesseeId" : "",
+            "AssesseeName" : "",
             "Address" : "",
             "PAN" : "",
             "MobNo" : "",
@@ -21,7 +27,8 @@ class Letter:
         if WardNo:
             self.properties['WardNo'] = WardNo
         if Assessee:
-            self.properties['Assessee'] = Assessee
+            self.properties['AssesseeId'] = Assessee
+            self.properties['AssesseeName'] = self.get_name_from_assessee(Assessee)
             self.properties['Address'] = self.get_address_from_assessee(Assessee)
             self.properties['PAN'] = self.get_pan_from_assess(Assessee)
             self.properties['MobNo'] = self.get_mobno_from_assess(Assessee)
@@ -36,41 +43,35 @@ class Letter:
     def create_object_from_json(self, obj):
         return Letter(obj.get('TO'), obj.get('isAssistantComm'), obj.get('WardNo'), obj.get('Assess'), obj.get('SUBJECT'), obj.get('RefNo'), obj.get('BODY'))
     
+    def get_name_from_assessee(self, Assessee):
+        try:
+            assessee_data = data[Assessee-1]
+            return assessee_data['name']
+        except:
+            return ""
+    
     def get_address_from_assessee(self, Assessee):
-        return "This is a demo Address"
+        try:
+            assessee_data = data[Assessee-1]
+            return assessee_data['address']
+        except:
+            return ""
     
     def get_mobno_from_assess(self, Assessee):
-        return "+91 90090 90909"
+        try:
+            assessee_data = data[Assessee-1]
+            return assessee_data['mobno']
+        except:
+            return ""
 
     def get_pan_from_assess(self, Assessee):
-        return "ABCD89EIJK"
+        try:
+            assessee_data = data[Assessee-1]
+            return assessee_data['PAN']
+        except:
+            return ""
 
     def save_to_docs(self, path):
-        # letter_string = ""
-        # with open('Letter/demo_letter.txt', 'r') as fp:
-        #     letter_string = fp.read()
-        # WardString = ""
-        # AssistantComm = ""
-        # if(self.properties['WardNo']):
-        #     CityCondition = "Akola."
-        #     WardString = "Ward - " + str(self.properties['WardNo']) + ","
-        # if(self.properties['isAssistantComm']):
-        #     CityCondition = "Akola Circle, Akola."
-        #     WardString = ""
-        #     AssistantComm = "Assistant Commissioner of Income Tax,"
-        # letter_string = letter_string.format(
-        #     TO=self.properties['TO'],
-        #     WardNo=WardString,
-        #     AssistantComm=AssistantComm,
-        #     CityCondition=CityCondition,
-        #     assessee=self.properties.get('Assessee'),
-        #     address=self.properties.get('Address'),
-        #     MobNo=self.properties.get('MobNo'),
-        #     PAN=self.properties.get('PAN'),
-        #     SUBJECT=self.properties.get('SUBJECT'),
-        #     RefNo=self.properties.get('RefNo'),
-        #     BODY=self.properties.get('BODY')
-        #     )
         document = Document()
         para1 = document.add_paragraph('To,\n' + self.properties['TO'])
         if(self.properties['isAssistantComm']):
@@ -80,7 +81,7 @@ class Letter:
             para1.add_run("Ward - " + str(self.properties['WardNo']) + ",\n")
             para1.add_run("Akola.\n\n")
         
-        para2 = document.add_paragraph("Assessee\t:\t" + self.properties.get('Assessee') + "\n")
+        para2 = document.add_paragraph("Assessee\t:\t" + self.properties.get('AssesseeName') + "\n")
         para2.add_run("\t\t\t" + self.properties.get('Address') + "\n")
         para2.add_run("\t\t\t" + 'Cell No. : ' + self.properties.get('MobNo') + "\n\n")
 
@@ -94,9 +95,6 @@ class Letter:
         document.save(path)
     
 def get_choices_kvp():
-    fp = open("C:\\Users\\kismatit\\OneDrive\\Desktop\\LetterGen\\data.json", "r")
-    raw_data = fp.read()
-    data = json.loads(raw_data)
     kvps = []
     for d in data:
         k = d['id']
