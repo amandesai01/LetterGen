@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <br><br>
+        <h1>Letter Generator</h1>
+        <br>
+        <form method="POST" action = "{{ url_for('add_assessee') }}" novalidate>
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+              <label for="exampleFormControlInput1">{{ form.Name.label }}</label>
+              {{ form.Name(class="form-control", id="exampleFormControlInput1") }}
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput2">{{ form.Address.label }}</label>
+                {{ form.Address(class="form-control", id="exampleFormControlInput2") }}
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput3">{{ form.Phoneno.label }}</label>
+                {{ form.Phoneno(class="form-control", id="exampleFormControlInput3") }}
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput4">{{ form.PAN.label }}</label>
+                {{ form.PAN(class="form-control", id="exampleFormControlInput4") }}
+            </div>            
+            {{ form.Submit(class="btn btn-primary mb-2") }}
+            <!-- <button type="submit" class="btn btn-primary mb-2">Confirm identity</button> -->
+          </form>
+          <br>
+          <br>
+    </div>
+    <!-- <form method="POST" action = "{{ url_for('generate') }}" novalidate> -->
+        <!-- {{ form.hidden_tag() }} <br> -->
+        <!-- {{ form.To() }} <br> -->
+        <!-- {{ form.IsAssistantComm() }} <br> -->
+        <!-- {{ form.WardNo() }} <br> -->
+        <!-- {{ form.Assessee() }} <br> -->
+        <!-- {{ form.Subject() }} <br> -->
+        <!-- {{ form.RefNo() }} <br> -->
+        <!-- {{ form.Body() }} <br> -->
+        <!-- {{ form.Submit() }} <br> -->
+    <!-- </form> -->
+</body>
+</html>

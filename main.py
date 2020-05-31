@@ -16,6 +16,13 @@ class GeneratorForm(FlaskForm):
     Body = TextAreaField("Body")
     Submit = SubmitField('Generate')
 
+class AssesseeForm(FlaskForm):
+    Name = StringField("Name")
+    Address = StringField("Address")
+    MobNo = StringField("Mobile No")
+    PAN = StringField("PAN")
+    Submit = SubmitField('Add')
+
 @app.route('/generate', methods=['GET', 'POST'])
 def generate():
     form = GeneratorForm()
@@ -32,6 +39,21 @@ def generate():
         return redirect('/')
     return render_template('main.html', form=form)
 
+@app.route('/add_assessee')
+def add_assessee():    
+    form = AssesseeForm()
+    if form.is_submitted():
+        Name = form.Name.data
+        Address = form.Address.data
+        MobNo = form.MobNo.data
+        PAN = form.MobNo.data
+        try:
+            # make.add_assessee()
+            print("adding")
+        except Exception as e:
+            print(str(e))
+        return redirect('/')
+    return render_template('new_assessee.html')
 @app.route('/')
 def home():
     return "<h1>Home</h1>"
