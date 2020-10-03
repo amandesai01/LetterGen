@@ -1,1 +1,0 @@
-A short python script for generating letters in a specific format 
